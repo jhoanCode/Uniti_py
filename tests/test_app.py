@@ -1,18 +1,18 @@
 
 import unittest
+from app import app
 
-# Importa el módulo que deseas probar
-from app import MiClase
+class TestApp(unittest.TestCase):
+    def setUp(self):
+        self.app = app.test_client()
 
-class TestMiClase(unittest.TestCase):
-    def test_algo(self):
-        # Crea una instancia de MiClase y realiza tus pruebas
-        objeto = MiClase()
-        resultado = objeto.algo()
-        self.assertEqual(resultado, esperado)
+    def test_index(self):
+        response = self.app.get('/')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Hola, mundoo!', response.data)
 
-
-
+if __name__ == '__main__':
+    unittest.main()
 
 # import pytest
 # from app import app
